@@ -1,0 +1,339 @@
+%% start of file `template.tex'.
+%% Copyright 2006-2013 Xavier Danaux (xdanaux@gmail.com).
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License version 1.3c,
+% available at http://www.latex-project.org/lppl/.
+
+
+\documentclass[11pt,letterpaper, sans]{moderncv}        % possible options include font size ('10pt', '11pt' and '12pt'), paper size ('a4paper', 'letterpaper', 'a5paper', 'legalpaper', 'executivepaper' and 'landscape') and font family ('sans' and 'roman')
+
+% modern themes
+\moderncvstyle{banking}                            % style options are 'casual' (default), 'classic', 'oldstyle' and 'banking'
+
+\moderncvcolor{purple}                                % color options 'blue' (default), 'orange', 'green', 'red', 'purple', 'grey' and 'black'
+%\renewcommand{\familydefault}{\sfdefault}         % to set the default font; use '\sfdefault' for the default sans serif font, '\rmdefault' for the default roman one, or any tex font name
+\nopagenumbers{}                                  % uncomment to suppress automatic page numbering for CVs longer than one page
+
+\usepackage{xcolor}
+% \definecolor{darkgreen}{RGB}{19, 84, 36}
+\definecolor{darkgreen}{RGB}{5, 66, 21}
+	
+\usepackage[colorlinks = true,
+            linkcolor = darkgreen,
+            urlcolor  = darkgreen,
+            citecolor = darkgreen,
+            anchorcolor = darkgreen, unicode]{hyperref}
+\usepackage{enumitem}
+\let\oldhref\href
+\renewcommand{\href}[2]{\oldhref{#1}{\bfseries#2}}
+
+\usepackage{datetime}
+\newdateformat{monthyeardate}{\monthname[\THEMONTH], \THEYEAR}
+
+% character encoding
+\usepackage[utf8]{inputenc}
+\usepackage{fontawesome5}
+\usepackage{tabularx}
+\usepackage{ragged2e}
+% if you are not using xelatex ou lualatex, replace by the encoding you are using
+%\usepackage{CJKutf8}                              % if you need to use CJK to typeset your resume in Chinese, Japanese or Korean
+
+% adjust the page margins
+\usepackage[scale=0.8]{geometry}
+\usepackage{multicol}
+%\setlength{\hintscolumnwidth}{3cm}                % if you want to change the width of the column with the dates
+%\setlength{\makecvtitlenamewidth}{10cm}           % for the 'classic' style, if you want to force the width allocated to your name and avoid line breaks. be careful though, the length is normally calculated to avoid any overlap with your personal info; use this at your own typographical risks...
+\newcommand{\code}[1]{\texttt{#1}}
+\usepackage{import}
+
+% personal data
+\name{Peter S.}{Ferguson}
+\title{CV}                               % optional, remove / comment the line if not wanted
+\address{Department of Astronomy}{University of Washington Seattle}{Box 351580, Seattle WA, 98195}% optional, remove / comment the line if not wanted; the "postcode city" and and "country" arguments can be omitted or provided empty
+% \phone[mobile]{909-839-3097}                   % optional, remove / comment the line if not wanted
+% \phone[fixed]{01234 123456}                    % optional, remove / comment the line if not wanted
+%\phone[fax]{+3~(456)~789~012}                      % optional, remove / comment the line if not wanted
+% \email{xpan1@swarthmore.edu}                               % optional, remove / comment the line if not wanted
+% \homepage{shawnpan.me}                         % optional, remove / comment the line if not wanted
+% \extrainfo{}                 % optional, remove / comment the line if not wanted
+%\photo[64pt][0.4pt]{picture}                       % optional, remove / comment the line if not wanted; '64pt' is the height the picture must be resized to, 0.4pt is the thickness of the frame around it (put it to 0pt for no frame) and 'picture' is the name of the picture file
+%\quote{Some quote}                                 % optional, remove / comment the line if not wanted
+
+% to show numerical labels in the bibliography (default is to show no labels); only useful if you make citations in your resume
+%\makeatletter
+%\renewcommand*{\bibliographyitemlabel}{\@biblabel{\arabic{enumiv}}}
+%\makeatother
+%\renewcommand*{\bibliographyitemlabel}{[\arabic{enumiv}]}% CONSIDER REPLACING THE ABOVE BY THIS
+
+% bibliography with mutiple entries
+%\usepackage{multibib}
+%\newcites{book,misc}{{Books},{Others}}
+  
+\newcommand*{\customcventry}[7][.25em]{
+  \begin{tabular}{@{}l} 
+    {\bfseries #4}
+  \end{tabular}
+  \hfill% move it to the right
+  \begin{tabular}{l@{}}
+     {\bfseries #5}
+  \end{tabular} \\
+  \begin{tabular}{@{}l} 
+    {\itshape #3}
+  \end{tabular}
+  \hfill% move it to the right
+  \begin{tabular}{l@{}}
+     {\itshape #2}
+  \end{tabular}
+  \ifx&#7&%
+  \else{\\%
+    \begin{minipage}{\maincolumnwidth}%
+      \small#7%
+    \end{minipage}}\fi%
+  \par\addvspace{#1}}
+
+\newcommand*{\customcvproject}[4][.25em]{
+%   \vfill\noindent
+  \begin{tabular}{@{}l} 
+    {\bfseries #2}
+  \end{tabular}
+  \hfill% move it to the right
+  \begin{tabular}{l@{}}
+     {\itshape #3}
+  \end{tabular}
+  \ifx&#4&%
+  \else{\\%
+    \begin{minipage}{\maincolumnwidth}%
+      \small#4%
+    \end{minipage}}\fi%
+  \par\addvspace{#1}}
+
+\setlength{\tabcolsep}{12pt}
+
+%----------------------------------------------------------------------------------
+%            content
+%----------------------------------------------------------------------------------
+\begin{document}
+%\begin{CJK*}{UTF8}{gbsn}                          % to typeset your resume in Chinese using CJK
+%-----       resume       ---------------------------------------------------------
+\makecvtitle
+\vspace*{-13mm}
+
+\begin{center}
+\begin{tabular}{ c c c}
+ \faGlobe\enspace \href{https://peterferguson.space/}{\url{peterferguson.space}}& \faEnvelope\enspace \href{mailto://pferguso@uw.edu}{\url{pferguso@uw.edu}}& \faGithub\enspace \href{https://github.com/psferguson}{psferguson} \\  
+\end{tabular}
+\end{center}
+
+\section{RESEARCH INTERESTS}
+\vspace*{0mm}
+\begin{center}
+    \begin{tabular}{c c c c}
+        Observational Cosmology & Milky Way (Sub)structure & Dark Matter & Tidal Streams \\
+        Photometric Calibration & Large Scale Surveys & Instrumentation & Science Validation
+    \end{tabular}
+\end{center}
+
+
+\section{APPOINTMENTS}
+
+\begin{centering}
+    \begin{tabular}{c l c}
+        \vspace{1mm}
+        Sep. 2024-Present & DiRAC Postdoctoral Fellow, DiRAC institute & U. of Washington
+        \vspace{-1mm}\\
+        %& UW Data Science Postdoctoral Fellow%, eScience Institute 
+        && Seattle 
+        \vspace{2mm}\\
+        2021-2024 & Postdoctoral Research Associate  & U. of Wisconsin
+        \vspace{-1mm}\\
+        & Rubin Observatory commissioning/Observational cosmology &  Madison
+        \vspace{2mm}\\
+        2020-2021 & Universities Research Association (URA) Visiting Scholar & Fermilab
+        \vspace{2mm}\\
+        2016-2021 & Graduate Research Assistant: Astronomy \& Instrumentation &Texas A\&M\\
+        %2016-2018 & Graduate Teaching Assistant: Astro-lab Coordinator/Instructor  & Texas A\&M\\
+%\hfill Lab Coordinator/Lab Instructor for Astronomy Lab\hfill\,\\
+        %2015 & Research Assistant with Kristin Chiboucas & Gemini Obs. North
+    \end{tabular}
+\end{centering}
+
+\section{EDUCATION}
+
+\textbf{Ph.D. in Astrophysics} \hfill 2021\\
+Texas A\&M University \hfill \\
+%\textbf{M.S. $\,$ in Astrophysics} \hfill 2019\\
+Science: Jennifer Marshall \& Louis Strigari  \quad \quad \quad Instrumentation:  Darren DePoy %{\hfill $^\star$\footnotesize{Anticipated}}
+\vspace*{2mm}
+
+\textbf{B.S. in Astrophysics} \hfill 2013\\
+Haverford College
+
+\vspace*{-4mm}
+
+\section{SCIENTIFIC COLLABORATIONS}
+\begin{itemize}[itemsep=1pt, leftmargin=65pt]
+    \item [2021-Present] \emph{Vera Rubin Observatory}: I am an in-kind contributor making significant contributions to many areas of the commissioning process. A few highlights:
+    \begin{itemize}
+        \item System Integration, Test, and Commissioning (SITCOM): I am one of the core members of the data analysis team helping provide rapid analysis of commissioning efforts (recently the telescope mount and main mirror cells). Additionally, I am helping to develop the tools we will use for the rest of commissioning. I have spent the last 6 months in Chile working closely with the construction team and acting as a volunteer observing specialist. 
+        \item Science Verification and Validation (SVV): I have led ad-hoc analyses of Aux-Tel data, been a developer for \href{https://github.com/lsst/analysis_tools}{\code{analysis\_tools}} the metric framework for the Rubin Science Pipeline, helped to develop the science validation surveys for commissioning, and am the science lead for the commissioning science unit focused on object detection, quality flags, verification \& validation sample production, and survey property maps.
+        \item Data Management (DM): I am one of the core members creating \href{https://github.com/lsst/analysis_tools}{\code{the\_monster}} an all sky reference catalog to bootstrap photometric calibrations for early operations. I also can process data and develop code for the rubin science pipelines. 
+        
+    \end{itemize}
+    \item [2021-Present] \emph{Dark Energy Science Collaboration (LSST-DESC)} [\url{https://lsstdesc.org/}]\\
+    \emph{Member}: Acting as a bridge between the Vera Rubin Observatory project and DESC to assist the Photometric Corrections, Science Release and Validation, and Commissioning working groups. \\
+    \emph{Dark Matter Working Group Convener}: I am one of two conveners for this working group within DESC
+    \item [2018-present] \emph{DECam Local Volume Exploration (DELVE) Survey} [\url{https://delve-survey.github.io}]\\
+    \emph{Builder}: DELVE is a 3-year survey combining archival DECam data with 126 nights of dedicated observing. This survey looks to probe the small scale nature of dark matter by (1) searching for ultra faint MW satellites and stellar streams, (2) studying the satellite population and star formation history around the Large and Small Magellanic Clouds, and (3) deeply imaging around isolated Large Magellanic Cloud analogs to determine their satellite luminosity function. I have contributed to much of the calibration pipeline, data validation, and morphological classifier for our first data release DELVE-DR1 in early 2021. 
+    
+    \item [2016-present] \emph{Dark Energy Survey (DES)} [\url{https://www.darkenergysurvey.org}]\\
+    %\emph{Member of Milky Way working group}: DES is a photometric survey over 5,000 deg in $griz$-bands to a depth of ~24th mag. I have contributed to validation of DES catalogs, and analyses looking for dwarf galaxies, stellar streams, and RR Lyrae in the DES datasets.  
+    \item [2020-present] Southern Stellar Stream Spectroscopic Survey ($\mathcal{S}^5$) [\url{https://s5collab.github.io/}]\\
+    %\emph{Member}: $\mathcal{S}^5$ is a spectroscopic survey run out of AAT to obtain spectra of stellar streams discovered in DES. I have contributed to target selection and determining stream membership probability of stars with 6D kinematic observations. 
+\end{itemize}
+\vspace*{-4mm}
+
+\section{Publications}
+\input{pubs}
+
+\section{Selected Talks/Posters}
+\subsection{Invited}
+\begin{itemize}[itemsep=1pt, leftmargin=28pt]
+    \item [2025] ``\textit{Unveiling dark matter in the near-field from present (DES) and future (LSST) cosmological surveys}",\\
+    AAS 245 DES-DESC splinter session
+    \item [2024] ``\textit{Seeking the nature of dark matter with the Milky Way halo and wide-field photometric surveys}", \\
+    Astronomy Colloquium, University of Washington \hfill Talk
+    \item [2024] ``\textit{LSST Overview}",\\
+    Dwarf Galaxies, Stellar Clusters and Streams in the LSST era, Chicago, IL\hfill Talk
+    \item [2024] ``\textit{Seeking the nature of dark matter with the Milky Way halo and wide-field photometric surveys}", \\
+    Cosmology Seminar at Carnegie Mellon University, Pittsburgh, PA\hfill Talk
+    \item [2024] ``\textit{Seeking the nature of dark matter with the Milky Way halo and wide-field photometric surveys}", \\
+    Astronomy Seminar, Dartmouth, NH\hfill Talk
+    \item [2024] ``\textit{Seeking the nature of dark matter with the Milky Way halo}", \\
+    MiFA Colloquium, Minneapolis, MN\hfill Talk
+    \item [2023] ``\textit{Seeking the nature of dark matter with the Milky Way halo}", \\
+    Noirlab South Colloquium, La Serena Chile\hfill Talk
+    \item [2023]``\textit{Plenary talk on dark matter working group}",
+    Remote, DESC spring meeting\hfill Talk
+    \item [2023] ``\textit{Seeking the nature of dark matter with the Milky Way halo}", \\
+    UW Madison Astronomy Colloquium\hfill Talk
+   %\item [2022] ``\textit{Adventures in Calibration-land}", DELVE Collaboration Meeting \hfill Talk
+    \item [2022] ``\textit{Calibration of the DELVE survey}", DESC Photometric Corrections Working Group \hfill Talk
+    % \item [2021] ``\textit{Using streams and surveys to constrain dark mater power spectrum}", \\\Observational Cosmology group UW Madison \hfill Talk
+   % \item [2021] ``\textit{DELVE-ing into the Jet}", University of Chicago \emph{Funch} %presentation \hfill Talk 
+   % \item [2021] ``\textit{The Messy Side of the Milky Way: using large surveys to explore our% Galaxy's halo}",\\
+  % Texas A\&M University Joint Nuclear and Astrophysics Seminar \hfill Talk
+  % \item [2020]  ``\textit{Stellar Streams in DELVE}",\\
+  % DECam Local Volume Exploration (DELVE) Survey Collaboration Meeting \hfill Talk
+  %\item [2020] ``\textit{Milky Way working group activities}",\\
+  %Dark Energy Survey(DES) Collaboration Meeting \hfill Talk
+\end{itemize}
+\subsection{Contributed}
+\begin{itemize} [itemsep=1pt, leftmargin=28pt] % Reduce space between items
+\item [2023] ``\textit{Dark Matter with Rubin Observatory}", PCW \hfill Session organizer
+\item [2022] ``\textit{Calibration of the DELVE survey}", DESC Collaboration Meeting \hfill Talk
+\item[2021] ``\textit{The Jet stream in DELVE}" \\
+Texas Section of the American Physical Society (TSAPS), virtual\hfill Talk
+
+\item[2021] ``\textit{The Jet stream in DELVE}" \\
+Streams21: Constraints on Dark Matter, Virtual \hfill Talk
+
+\item[2020] ``\textit{Further development and testing of TCal: a mobile spectrophotometric calibration unit for\\ astronomical imaging systems}", 
+SPIE Astronomical Telescopes + Instrumentation, Virtual \hfill Poster
+
+\item[2019] ``\textit{Exploring the 3D structure of the Sagittarius dSph core using RR Lyrae}"\\
+RRL/Cepheid, Cloudcroft, NM  \hfill Talk
+ 
+\item[2019] ``\textit{Constraining the 3D structure of the Sagittarius dwarf galaxy using RR-Lyrae and simple\\ hierarchical
+Bayesian modeling}" Workshop on Astronomy \& Statistics, Texas A\&M University \hfill Talk
+
+\item [2018] ``\textit{RR-Lyrae in the Dark Energy Survey}",
+Near-Field Cosmology with the Dark Energy Survey's\\
+DR1 and Beyond, Kavali Institute for Cosmological Physics, University of Chicago \hfill Talk 
+
+\item Texas A\&M Astronomy Symposium \hfill 25 Aug. 2018 \\
+Talk: \textit{TCal: a mobile spectrophotometric calibration unit for astronomical imaging systems} \\
+Texas A\&M University, College Station, TX
+
+\item[2018] ``\textit{TCal: a mobile spectrophotometric calibration unit for astronomical imaging systems}"\\
+SPIE Astronomical Telescopes + Instrumentation, Austin, Tx.\hfill Poster
+
+\item [2017] ``\textit{K2F2: Two new medium K-band filters on FLAMINGOS-2 at Gemini South}"\\
+Frank N. Bash Symposium, The University of Texas at Austin \hfill Poster
+\end{itemize}
+\section{PROPOSALS}
+Below are the successful observing proposals I have been the PI for.
+\begin{itemize}[itemsep=1pt, leftmargin=28pt]
+    \item [2022] \emph{Probing the Milky Way using DECam and stellar streams}\\ DECam 2023A (2.5 nights of observations)
+    \item [2022] \emph{Probing the Milky Way using DECam and stellar streams}\\ DECam 2022B (3.5 nights of observations)
+    \item [2019] \emph{Probing the Dynamical Structure of Sagittarius}\\ VLT/FLAMES cycle 105 (0.5 nights of observations pushed to 2021 due to COVID)
+    \item [2019] \emph{Probing the Dynamical Structure of Sagittarius}\\ Gemini south 2020A (18 hours of observations not taken due to COVID)
+\end{itemize}
+\section{OBSERVING EXPERIENCE}
+\begin{itemize}[itemsep=1pt, leftmargin=2pt]
+    \item \textbf{Rubin Observatory} Simonyi Survey Telescope \hfill 15 nights\\
+    Assisting comissioning and integration efforts
+    \item \textbf{Cerro Tololo Interr-American Observatory} Chile -- Blanco 4-meter telescope \hfill 14 nights\\
+           Used DECam both in person and remotely
+    \item \textbf{McDonald Observatory} TX, USA -- Harlan Smith 2.7-meter telescope \hfill 20 nights\\
+           Used Tull coud\'e Echelle Spectrograph for R-Process Alliance Observing
+    \item \textbf{Gemini South:} Chile -- 8-meter telescope \hfill 3 nights\\
+           Commissioned 2 new filters on FLAMINGOS-2
+    \item \textbf{Gemini North:} HI, USA -- 8-meter telescope \hfill 3 nights\\
+           Operated Queue as part of work at Gemini
+\end{itemize}
+
+\section{AWARDS}
+\begin{minipage}{\maincolumnwidth}%
+	\small{
+    	\begin{itemize}[itemsep=1pt, leftmargin=28pt]
+          \item [2021] Spring TSAPS outstanding talk by a graduate student 
+          \item [2020] Fall TSAPS outstanding talk by a graduate student 
+          \item [2020] URA Visiting Scholar at Fermilab award (Sponsor: Alex Drlica-Wagner)
+          \item []
+		\end{itemize}}%
+\end{minipage}%
+\vspace{-4mm}      
+\section{MENTORING}
+\begin{itemize} [itemsep=1pt, leftmargin=65pt]
+    \item [2023-2024] Miranda Gorsuch, a physics PhD student at UW Madison, has worked on data analysis for LSST commissioning.
+    \item [2022-2024] Kyle Boone, a physics major at UW Madison, has worked on using synthetic source injection (Balrog) and survey property maps to generate stellar weight maps for DES analyses. Kyle is now a grad student at Harvard. 
+    \item [2020-2021] Kiyan Tavanagar, an astrophysics major at University of Chicago, has worked on characterizing stellar streams found in DES. Kiyan is currently a graduate student at Columbia.   
+    \item [2018-2021] Leo Barba, a physics major at Texas A\&M, has worked 3D printing and designing parts for TCal as well as helping to set up and run the instrument. Currently astronomy graduate student at UMass Amherst.  
+    \item [2018] Sarah Hughes, an REU student at Texas A\&M, helped to design the LabView based software used to run TCal.  
+\end{itemize}
+
+% \section{References}
+% \begin{itemize} [itemsep=1pt, leftmargin=65pt]
+%     \item[-] Keith Bechtol 
+% Alex Drlica-Wagner <kadrlica@fnal.gov> 
+% Keith Bechtol <kbechtol@wisc.edu>
+% Jennifer Marshall <marshall@tamu.edu> 
+% \end{itemize}
+\vfill
+\begin{center}
+    Last Updated: \monthyeardate\today
+\end{center}
+{\centering }
+% Publications from a BibTeX file without multibib
+%  for numerical labels: \renewcommand{\bibliographyitemlabel}{\@biblabel{\arabic{enumiv}}}% CONSIDER MERGING WITH PREAMBLE PART
+%  to redefine the heading string ("Publications"): \renewcommand{\refname}{Articles}
+\nocite{*}
+% \bibliographystyle{plain}
+% \bibliography{publications}                        % 'publications' is the name of a BibTeX file
+
+% Publications from a BibTeX file using the multibib package
+%\section{Publications}
+%\nocitebook{book1,book2}
+%\bibliographystylebook{plain}
+%\bibliographybook{publications}                   % 'publications' is the name of a BibTeX file
+%\nocitemisc{misc1,misc2,misc3}
+%\bibliographystylemisc{plain}
+%\bibliographymisc{publications}                   % 'publications' is the name of a BibTeX file
+
+%-----       letter       ---------------------------------------------------------
+
+\end{document}
+
+
+%% end of file `template.tex'.
