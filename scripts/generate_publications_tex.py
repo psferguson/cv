@@ -15,7 +15,8 @@ def generate_tex(yaml_file, bib_file, output_file):
         tex_file.write("\\renewcommand{\\labelitemi}{$$}\n")
 
         for title in publications.keys():
-            tex_file.write(f"\\subsection{{{title}}}\n")
+            subsection_string = "\\subsection{" + f"{title}" +  f"  ({len(publications[title])})"+"}\n"
+            tex_file.write(subsection_string)
             tex_file.write("\\begin{itemize}[itemsep=1pt]\n")
             # Write section title
             entries = publications[title]
