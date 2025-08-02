@@ -47,6 +47,14 @@
 \newcommand{\code}[1]{\texttt{#1}}
 \usepackage{import}
 
+% Replace bibentry with biblatex
+\usepackage[backend=biber]{biblatex}
+% Add the bibliography resource
+\addbibresource{ferguson_publications.bib}
+
+% Include aas_macros to define journal abbreviations
+\usepackage{aas_macros}
+
 % personal data
 \name{Peter S.}{Ferguson}
 \title{CV}                               % optional, remove / comment the line if not wanted
@@ -61,7 +69,7 @@
 %\quote{Some quote}                                 % optional, remove / comment the line if not wanted
 
 % to show numerical labels in the bibliography (default is to show no labels); only useful if you make citations in your resume
-%\makeatletter
+%\make@letter
 %\renewcommand*{\bibliographyitemlabel}{\@biblabel{\arabic{enumiv}}}
 %\makeatother
 %\renewcommand*{\bibliographyitemlabel}{[\arabic{enumiv}]}% CONSIDER REPLACING THE ABOVE BY THIS
@@ -109,6 +117,17 @@
   \par\addvspace{#1}}
 
 \setlength{\tabcolsep}{12pt}
+
+% Customize \fullcite appearance
+\DeclareFieldFormat{title}{\textit{#1}}
+\DeclareFieldFormat{author}{#1}
+\DeclareFieldFormat{year}{#1}
+\DeclareFieldFormat{journal}{\href{https://ui.adsabs.harvard.edu/abs/#1/abstract}{#1}}
+\renewbibmacro*{author}{\printnames{author}}
+\renewbibmacro*{title}{\printfield{title}}
+\renewbibmacro*{year}{\printfield{year}}
+\renewbibmacro*{journal}{\printfield{journal}}
+
 
 %----------------------------------------------------------------------------------
 %            content
@@ -194,7 +213,9 @@ Haverford College
 \vspace*{-4mm}
 
 \section{Publications}
-\input{pubs}
+\hspace{1.6in} Orcid: \href{https://orcid.org/0000-0001-6957-1627}{0000-0001-6957-1627} | ADS Library: \href{https://ui.adsabs.harvard.edu/user/libraries/rBhHJF5MTWqIJuR0n-PNKA}{Link}
+%\input{pubs}
+\input{auto_pubs}
 
 \section{Selected Talks/Posters}
 \subsection{Invited}
@@ -318,7 +339,7 @@ Below are the successful observing proposals I have been the PI for.
 % Publications from a BibTeX file without multibib
 %  for numerical labels: \renewcommand{\bibliographyitemlabel}{\@biblabel{\arabic{enumiv}}}% CONSIDER MERGING WITH PREAMBLE PART
 %  to redefine the heading string ("Publications"): \renewcommand{\refname}{Articles}
-\nocite{*}
+% \nocite{*}
 % \bibliographystyle{plain}
 % \bibliography{publications}                        % 'publications' is the name of a BibTeX file
 
