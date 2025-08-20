@@ -1,5 +1,6 @@
 from ads.libraries import Library
 from ads.search import SearchQuery
+from ads.export import ExportQuery
 import os
 import subprocess
 import sys
@@ -19,7 +20,7 @@ def export_bib_from_ads(library_id, output_file):
 
     with open(output_file, "w") as fout:
         for paper in papers:
-            bib = paper.bibtex
+            bib = paper.bibtex  # Inefficient query to fetch BibTeX entries
             fout.write(bib + "\n\n")
 
     print(f"✅ Saved {len(papers)} entries to {output_file}")
@@ -45,5 +46,16 @@ def generate_latex_publications():
 if __name__ == "__main__":
     # Generate BibTeX file
     num_papers = export_bib_from_ads(LIBRARY_ID, BIB_FILE)
+    
+    # Append the content of missing_pubs.bib to the end of the BibTeX file
+    missing_bib_file = "missing_pubs.bib"
+    if os.path.exists(missing_bib_file):
+        with open(missing_bib_file, "r") as fin:
+            missing_bib_content = fin.read()
+        with open(BIB_FILE, "a") as fout:
+            fout.write("\n" + missing_bib_content)
+        print(f"✅ Appended content from {missing_bib_file} to {BIB_FILE}")
+    else:
+        print(f"⚠️  Warning: {missing_bib_file} not found. No additional entries appended.")
     
     # Generate LaTeX publications file
