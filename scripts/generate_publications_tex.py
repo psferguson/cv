@@ -65,8 +65,11 @@ def generate_tex(yaml_file, bib_file, output_file):
                     url = bib_entry.fields.get('adsurl', '')
                     if journal == 'arXiv e-prints':
                         journal = 'arXiv/' + bib_entry.fields.get('eprint', '')  # Keep only the arXiv ID part
-                    if (journal == 'No Journal') & ("SPIE" in url):
+                    elif (journal == 'No Journal') & ("SPIE" in url):
                         journal = "SPIE" 
+                    elif (journal == 'No Journal') & ("DMTN" in bib_entry.fields.get('number', '')):
+                        journal = "DMTN"
+                        url = bib_entry.fields.get('url', url)  # Use 'url' field if available
                     tex_file.write(f"    \\item {formatted_authors}, \\textit{{{title}}}, \\href{{{url}}}{{\\textbf{{{journal}}}, {year}}}\n")
             tex_file.write("\\end{itemize}\n")
 
