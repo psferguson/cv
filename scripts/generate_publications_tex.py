@@ -65,6 +65,10 @@ def generate_tex(yaml_file, bib_file, output_file):
                     if len(authors) > len(author_list):  # If more authors exist, add "et al."
                         author_list.append("et al.")
 
+                    # Underline the first author for student-led papers
+                    if student_led and author_list:
+                        author_list[0] = f"\\underline{{{author_list[0]}}}"
+
                     formatted_authors = ', '.join(author_list)
                     title = bib_entry.fields.get('title', 'No Title')
                     year = bib_entry.fields.get('year', 'No Year')
@@ -79,9 +83,7 @@ def generate_tex(yaml_file, bib_file, output_file):
                         journal = "DMTN"
                         url = bib_entry.fields.get('url', url)  # Use 'url' field if available
                     
-                    # Add asterisk for student-led papers
-                    prefix = "*" if student_led else ""
-                    tex_file.write(f"    \\item {prefix}{formatted_authors}, \\textit{{{title}}}, \\href{{{url}}}{{\\textbf{{{journal}}}, {year}}}\n")
+                    tex_file.write(f"    \\item {formatted_authors}, \\textit{{{title}}}, \\href{{{url}}}{{\\textbf{{{journal}}}, {year}}}\n")
             tex_file.write("\\end{itemize}\n")
 
 if __name__ == "__main__":
