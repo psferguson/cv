@@ -24,8 +24,16 @@ def generate_tex(yaml_file, bib_file, output_file):
                 entries = [entries]
             # Modify how the author list is displayed
             for entry in entries:
-                if entry in bib_data.entries:
-                    bib_entry = bib_data.entries[entry]
+                # Handle both string entries and dictionary entries
+                if isinstance(entry, dict):
+                    bibcode = entry['bibcode']
+                    student_led = entry.get('student_led', False)
+                else:
+                    bibcode = entry
+                    student_led = False
+                
+                if bibcode in bib_data.entries:
+                    bib_entry = bib_data.entries[bibcode]
                     authors = bib_entry.persons['author']
                     author_list = []
                     found_self = False
@@ -70,7 +78,10 @@ def generate_tex(yaml_file, bib_file, output_file):
                     elif (journal == 'No Journal') & ("DMTN" in bib_entry.fields.get('number', '')):
                         journal = "DMTN"
                         url = bib_entry.fields.get('url', url)  # Use 'url' field if available
-                    tex_file.write(f"    \\item {formatted_authors}, \\textit{{{title}}}, \\href{{{url}}}{{\\textbf{{{journal}}}, {year}}}\n")
+                    
+                    # Add asterisk for student-led papers
+                    prefix = "*" if student_led else ""
+                    tex_file.write(f"    \\item {prefix}{formatted_authors}, \\textit{{{title}}}, \\href{{{url}}}{{\\textbf{{{journal}}}, {year}}}\n")
             tex_file.write("\\end{itemize}\n")
 
 if __name__ == "__main__":
