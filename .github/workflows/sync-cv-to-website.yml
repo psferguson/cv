@@ -1,0 +1,39 @@
+name: Sync CV to website
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ferguson_peter_cv.pdf
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout cv repo
+        uses: actions/checkout@v4
+        with:
+          path: cv
+
+      - name: Checkout website repo
+        uses: actions/checkout@v4
+        with:
+          repository: psferguson/psferguson.github.io
+          ref: main
+          token: ${{ secrets.WEBSITE_REPO_TOKEN }}
+          path: website
+
+      - name: Copy CV and push if changed
+        working-directory: website
+        run: |
+          cp ../cv/ferguson_peter_cv.pdf public/ferguson_peter_cv.pdf
+          if git diff --quiet -- public/ferguson_peter_cv.pdf; then
+            echo "CV unchanged; nothing to do."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/ferguson_peter_cv.pdf
+          git commit -m "Update CV from psferguson/cv@${GITHUB_SHA::7}"
+          git push
