@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - ferguson_peter_cv.pdf
+      - ferguson_publications.bib
+      - scripts/publications.yaml
+      - scripts/generate_publications_md.py
   workflow_dispatch:
 
 jobs:
@@ -24,16 +27,28 @@ jobs:
           token: ${{ secrets.WEBSITE_REPO_TOKEN }}
           path: website
 
-      - name: Copy CV and push if changed
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate publications page
+        working-directory: cv
+        run: |
+          pip install pybtex pyyaml
+          python scripts/generate_publications_md.py
+
+      - name: Copy CV and publications page, push if changed
         working-directory: website
         run: |
           cp ../cv/ferguson_peter_cv.pdf public/ferguson_peter_cv.pdf
-          if git diff --quiet -- public/ferguson_peter_cv.pdf; then
-            echo "CV unchanged; nothing to do."
+          cp ../cv/publications.md publications.md
+          if git diff --quiet -- public/ferguson_peter_cv.pdf publications.md; then
+            echo "Nothing changed; nothing to do."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/ferguson_peter_cv.pdf
-          git commit -m "Update CV from psferguson/cv@${GITHUB_SHA::7}"
+          git add public/ferguson_peter_cv.pdf publications.md
+          git commit -m "Update CV and publications from psferguson/cv@${GITHUB_SHA::7}"
           git push
