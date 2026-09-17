@@ -1,17 +1,18 @@
-name: Sync CV to website
+name: Build CV and sync to website
 
 on:
   push:
     branches: [main]
     paths:
-      - ferguson_peter_cv.pdf
-      - ferguson_publications.bib
-      - scripts/publications.yaml
-      - scripts/generate_publications_md.py
+      - "*.tex"
+      - "*.bib"
+      - "*.sty"
+      - scripts/**
+      - .github/workflows/sync-cv-to-website.yml
   workflow_dispatch:
 
 jobs:
-  sync:
+  build-and-sync:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout cv repo
@@ -32,13 +33,26 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Generate publications page
+      - name: Generate publication lists (auto_pubs.tex and publications.md)
         working-directory: cv
         run: |
           pip install pybtex pyyaml
+          python scripts/generate_publications_tex.py
           python scripts/generate_publications_md.py
 
-      - name: Copy CV and publications page, push if changed
+      - name: Build CV PDF (pdflatex + biber via latexmk)
+        uses: xu-cheng/latex-action@v3
+        with:
+          working_directory: cv
+          root_file: ferguson_peter_cv.tex
+
+      - name: Upload PDF as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ferguson_peter_cv
+          path: cv/ferguson_peter_cv.pdf
+
+      - name: Copy CV and publications page to website, push if changed
         working-directory: website
         run: |
           cp ../cv/ferguson_peter_cv.pdf public/ferguson_peter_cv.pdf
