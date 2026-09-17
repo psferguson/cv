@@ -3,7 +3,11 @@ import os
 import subprocess
 import sys
 
-token = "Cvl4e84W1MgDL4xl06EJoVsMb8x2OcWhX9B6eUdj"
+# ADS API token: https://ui.adsabs.harvard.edu/user/settings/token
+# Set it in your shell (export ADS_API_TOKEN=...) rather than committing it.
+token = os.environ.get("ADS_API_TOKEN")
+if not token:
+    sys.exit("Error: set the ADS_API_TOKEN environment variable (see https://ui.adsabs.harvard.edu/user/settings/token)")
 LIBRARY_ID = "rBhHJF5MTWqIJuR0n-PNKA"
 BIB_FILE = "ferguson_publications.bib"
 
