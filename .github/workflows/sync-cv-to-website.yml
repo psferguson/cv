@@ -1,14 +1,18 @@
-name: Sync CV to website
+name: Build CV and sync to website
 
 on:
   push:
     branches: [main]
     paths:
-      - ferguson_peter_cv.pdf
+      - "*.tex"
+      - "*.bib"
+      - "*.sty"
+      - scripts/**
+      - .github/workflows/sync-cv-to-website.yml
   workflow_dispatch:
 
 jobs:
-  sync:
+  build-and-sync:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout cv repo
@@ -24,16 +28,41 @@ jobs:
           token: ${{ secrets.WEBSITE_REPO_TOKEN }}
           path: website
 
-      - name: Copy CV and push if changed
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate publication lists (auto_pubs.tex and publications.md)
+        working-directory: cv
+        run: |
+          pip install pybtex pyyaml
+          python scripts/generate_publications_tex.py
+          python scripts/generate_publications_md.py
+
+      - name: Build CV PDF (pdflatex + biber via latexmk)
+        uses: xu-cheng/latex-action@v3
+        with:
+          working_directory: cv
+          root_file: ferguson_peter_cv.tex
+
+      - name: Upload PDF as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ferguson_peter_cv
+          path: cv/ferguson_peter_cv.pdf
+
+      - name: Copy CV and publications page to website, push if changed
         working-directory: website
         run: |
           cp ../cv/ferguson_peter_cv.pdf public/ferguson_peter_cv.pdf
-          if git diff --quiet -- public/ferguson_peter_cv.pdf; then
-            echo "CV unchanged; nothing to do."
+          cp ../cv/publications.md publications.md
+          if git diff --quiet -- public/ferguson_peter_cv.pdf publications.md; then
+            echo "Nothing changed; nothing to do."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/ferguson_peter_cv.pdf
-          git commit -m "Update CV from psferguson/cv@${GITHUB_SHA::7}"
+          git add public/ferguson_peter_cv.pdf publications.md
+          git commit -m "Update CV and publications from psferguson/cv@${GITHUB_SHA::7}"
           git push
